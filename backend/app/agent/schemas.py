@@ -14,3 +14,15 @@ class ResumeExtraction(BaseModel):
     candidate_name: str | None = None
     projects: list[ProjectTech]
     all_technologies: list[str] = Field(description="Deduplicated flat list across all projects")
+class MCQQuestion(BaseModel):
+    id: str
+    project_name: str
+    technology: str
+    difficulty: Literal["basic", "intermediate", "advanced"]
+    question: str
+    options: list[str] = Field(min_length=4, max_length=4)
+    correct_option_index: int = Field(ge=0, le=3)
+    explanation: str
+
+class MCQQuizSet(BaseModel):
+    questions: list[MCQQuestion]
