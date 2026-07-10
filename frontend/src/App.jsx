@@ -1,32 +1,35 @@
+
 import { useState } from "react";
+import ResumeUpload from "./components/ResumeUpload";
+import ResumeSummary from "./components/ResumeSummary";
+import MCQQuiz from "./components/MCQQuiz";
+import QuizSummary from "./components/QuizSummary";
 
 export default function App() {
-  const [file, setFile] = useState(null);
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError(null);
-    const form = new FormData();
-    form.append("file", file);
-    const res = await fetch("/api/resumes/upload", { method: "POST", body: form });
-    if (!res.ok) {
-      setError(await res.text());
-      return;
-    }
-    setResult(await res.json());
-  }
+  const [screen, setScreen] = useState("upload");
+  const [resumeData, setResumeData] = useState(null);
+  const [quizData, setQuizData] = useState(null);
+  const [quizAnswers, setQuizAnswers] = useState([]);
 
   return (
-    <div style={{ padding: 24, fontFamily: "sans-serif" }}>
+    <div style={{ maxWidth: 720, margin: "0 auto", padding: 24, fontFamily: "sans-serif" }}>
       <h1>Resume Interview Prep</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="file" accept="application/pdf" onChange={(e) => setFile(e.target.files[0])} />
-        <button type="submit" disabled={!file}>Upload</button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
+
+      {screen === "upload" && (
+        <ResumeUpload onParsed={(r) => { setResumeData(r); setScreen("summary"); }} />
+      )}
+      {screen === "summary" && (
+        <ResumeSummary resumeData={resumeData}
+          onMcqStart={(q) => { setQuizData(q); setScreen("mcq"); }} />
+      )}
+      {screen === "mcq" && (
+        <MCQQuiz quizData={quizData}
+          onComplete={(answers) => { setQuizAnswers(answers); setScreen("mcq-results"); }} />
+      )}
+      {screen === "mcq-results" && (
+        <QuizSummary answers={quizAnswers} quizData={quizData}
+          onRetake={() => setScreen("summary")} />
+      )}
     </div>
   );
 }
