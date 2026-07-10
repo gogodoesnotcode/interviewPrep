@@ -3,6 +3,8 @@ from app.core.config import settings
 from app.agent.resume_graph import run_resume_parse
 from app.parsing.resume_extractor import extract_text
 from app.models.api_models import ResumeUploadResponse
+from app.agent.mcq_graph import run_mcq_generation
+from app.models.api_models import MCQGenerationRequest
 
 router = APIRouter(prefix="/api")
 
@@ -26,3 +28,11 @@ async def upload_resume(file: UploadFile):
 @router.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+@router.post("/quiz/mcq")
+async def generate_mcq(req: MCQGenerationRequest):
+    quiz = await run_mcq_generation(req.resume, req.num_questions)
+    if quiz is None:
+        raise HTTPException(422, "Question generation failed validation twice — try again.")
+    return quiz
