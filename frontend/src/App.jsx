@@ -4,6 +4,7 @@ import ResumeUpload from "./components/ResumeUpload";
 import ResumeSummary from "./components/ResumeSummary";
 import MCQQuiz from "./components/MCQQuiz";
 import QuizSummary from "./components/QuizSummary";
+import "./styles.css";
 
 export default function App() {
   const [screen, setScreen] = useState("upload");
@@ -12,23 +13,44 @@ export default function App() {
   const [quizAnswers, setQuizAnswers] = useState([]);
 
   return (
-    <div style={{ maxWidth: 720, margin: "0 auto", padding: 24, fontFamily: "sans-serif" }}>
-      <h1>Resume Interview Prep</h1>
+    <div className="app-shell">
+      <div className="brand">
+        <span className="brand-mark">IP</span>
+        <span className="brand-name">Interview Prep</span>
+      </div>
 
       {screen === "upload" && (
-        <ResumeUpload onParsed={(r) => { setResumeData(r); setScreen("summary"); }} />
+        <ResumeUpload
+          onParsed={(r) => {
+            setResumeData(r);
+            setScreen("summary");
+          }}
+        />
       )}
       {screen === "summary" && (
-        <ResumeSummary resumeData={resumeData}
-          onMcqStart={(q) => { setQuizData(q); setScreen("mcq"); }} />
+        <ResumeSummary
+          resumeData={resumeData}
+          onMcqStart={(q) => {
+            setQuizData(q);
+            setScreen("mcq");
+          }}
+        />
       )}
       {screen === "mcq" && (
-        <MCQQuiz quizData={quizData}
-          onComplete={(answers) => { setQuizAnswers(answers); setScreen("mcq-results"); }} />
+        <MCQQuiz
+          quizData={quizData}
+          onComplete={(answers) => {
+            setQuizAnswers(answers);
+            setScreen("mcq-results");
+          }}
+        />
       )}
       {screen === "mcq-results" && (
-        <QuizSummary answers={quizAnswers} quizData={quizData}
-          onRetake={() => setScreen("summary")} />
+        <QuizSummary
+          answers={quizAnswers}
+          quizData={quizData}
+          onRetake={() => setScreen("summary")}
+        />
       )}
     </div>
   );

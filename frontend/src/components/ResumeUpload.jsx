@@ -1,5 +1,5 @@
 import { useState } from "react";
-import * as api from "../api/client";
+import { uploadResume } from "../api/client";
 
 export default function ResumeUpload({ onParsed }) {
   const [file, setFile] = useState(null);
@@ -8,70 +8,57 @@ export default function ResumeUpload({ onParsed }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (!file) return;
     setError(null);
     setIsUploading(true);
     try {
-      const resume = await api.uploadResume(file);
+      const resume = await uploadResume(file);
       onParsed(resume);
     } catch (err) {
-      setError(err.message || "Upload failed. Please try again.");
+      setError("Couldn't read that resume. Try a different PDF.");
     } finally {
       setIsUploading(false);
     }
   }
 
   return (
-    <div style={{ maxWidth: 500, margin: "0 auto", padding: "40px 20px" }}>
-      <p style={{ color: "#666", fontSize: 14, marginBottom: 30 }}>
-        Upload your resume (PDF) to get started. Processing may take up to 60 seconds on first request.
+    <div>
+      <p className="eyebrow">UPLOAD &rarr; PARSE &rarr; PRACTICE</p>
+      <h1 className="hero-title">Know your own resume.</h1>
+      <p className="hero-sub">
+        Upload your resume and this turns the projects on it into interview
+        questions &mdash; multiple choice today, written answers coming soon.
+        No sign-up, nothing saved.
       </p>
-      <form onSubmit={handleSubmit}>
+
+      <form className="card upload-card" onSubmit={handleSubmit}>
+        <label className="dropzone" htmlFor="resume-file">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="dropzone-icon">
+            <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span className="dropzone-text">
+            {file ? file.name : "Click to choose a PDF resume"}
+          </span>
+        </label>
         <input
+          id="resume-file"
           type="file"
           accept="application/pdf"
           onChange={(e) => setFile(e.target.files[0])}
-          style={{
-            display: "block",
-            marginBottom: 16,
-            padding: "10px",
-            border: "1px solid #ddd",
-            borderRadius: 4,
-            width: "100%",
-            boxSizing: "border-box",
-          }}
+          hidden
         />
-        <button
-          type="submit"
-          disabled={!file || isUploading}
-          style={{
-            width: "100%",
-            padding: "12px 16px",
-            backgroundColor: file && !isUploading ? "#0066cc" : "#ccc",
-            color: "white",
-            border: "none",
-            borderRadius: 4,
-            fontSize: 16,
-            fontWeight: 500,
-            cursor: file && !isUploading ? "pointer" : "not-allowed",
-          }}
-        >
-          {isUploading ? "Uploading..." : "Upload Resume"}
+
+        <button className="btn" type="submit" disabled={!file || isUploading}>
+          {isUploading ? "Reading your resume…" : "Upload & analyze"}
         </button>
+
+        {isUploading && (
+          <p className="hint">
+            First request can take up to a minute on a cold server &mdash; hang tight.
+          </p>
+        )}
+        {error && <p className="error-text">{error}</p>}
       </form>
-      {error && (
-        <p
-          style={{
-            color: "#d32f2f",
-            marginTop: 16,
-            padding: "12px",
-            backgroundColor: "#ffebee",
-            borderRadius: 4,
-            fontSize: 14,
-          }}
-        >
-          {error}
-        </p>
-      )}
     </div>
   );
 }

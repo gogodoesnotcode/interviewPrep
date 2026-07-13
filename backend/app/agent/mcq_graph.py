@@ -1,9 +1,11 @@
 
-from typing import TypedDict, Literal
-from langgraph.graph import StateGraph, END
+from typing import Literal, TypedDict
+
+from langgraph.graph import END, StateGraph
+
 from app.agent.llm import get_llm
 from app.agent.prompts import MCQ_GENERATION_SYSTEM_PROMPT
-from app.agent.schemas import ResumeExtraction, MCQQuizSet
+from app.agent.schemas import MCQQuizSet, ResumeExtraction
 
 class MCQState(TypedDict):
     resume: ResumeExtraction
@@ -11,12 +13,29 @@ class MCQState(TypedDict):
     quiz: MCQQuizSet | None
     attempts: int
 
+
+def format_resume_for_mcq_prompt(resume: ResumeExtraction) -> str:
+    lines = []
+    if resume.candidate_name:
+        lines.append(f"Candidate: {resume.candidate_name}")
+
+    for project in resume.projects:
+        technologies = ", ".join(project.technologies)
+        lines.append(
+            f"Project: {project.project_name}\n"
+            f"Role: {project.role or 'not stated'}\n"
+            f"Description: {project.description}\n"
+            f"Technologies: {technologies}"
+        )
+
+    return "\n\n".join(lines)
+
 def generate_mcq(state: MCQState) -> MCQState:
-    llm = get_llm(temperature=0.5).with_structured_output(MCQQuizSet)
+    llm = get_llm(temperature=0.2).with_structured_output(MCQQuizSet, method="json_schema")
     prompt = MCQ_GENERATION_SYSTEM_PROMPT.format(num_questions=state["num_questions"])
     quiz = llm.invoke([
         ("system", prompt),
-        ("human", state["resume"].model_dump_json()),
+        ("human", format_resume_for_mcq_prompt(state["resume"])),
     ])
     return {**state, "quiz": quiz, "attempts": state["attempts"] + 1}
 

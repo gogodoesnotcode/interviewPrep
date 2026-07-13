@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+/* ===== Design tokens ===== */
+:root {
+  --cream: #f2ecdc;
+  --cream-light: #faf7ee;
+  --ink: #1b1b16;
+  --ink-soft: #6b6558;
+  --border: #1b1b16;
+  --correct: #4c6b4f;
+  --correct-bg: #e3e9dd;
+  --incorrect: #8b3e2f;
+  --incorrect-bg: #f2e1da;
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-sm: 3px 3px 0 var(--ink-soft);
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-shell {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 20px 100px;
+}
+
+/* ===== Brand header ===== */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 44px;
+}
+.brand-mark {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border: 1.5px solid var(--ink);
+  border-radius: 5px;
+  padding: 3px 7px;
+}
+.brand-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* ===== Typography ===== */
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.hero-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.08;
+  margin: 0 0 14px;
+}
+.hero-sub {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 32px;
+  max-width: 46ch;
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 26px;
+  margin: 0 0 10px;
+}
+.section-title.small { font-size: 16px; margin: 28px 0 10px; }
+.hint { font-size: 12.5px; color: var(--ink-soft); margin: 10px 0 0; }
+.error-text { font-size: 13px; color: var(--incorrect); margin: 10px 0 0; }
+
+/* ===== Cards — the shared "stationery" look ===== */
+.card {
+  background: var(--cream-light);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  padding: 13px 22px;
+  cursor: pointer;
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, opacity 0.15s ease;
+}
+.btn:hover:not(:disabled) { opacity: 0.92; }
+.btn:active:not(:disabled) { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink-soft); }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+/* ===== Upload screen ===== */
+.upload-card { display: flex; flex-direction: column; gap: 18px; }
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 36px 20px;
+  border: 1.5px dashed var(--ink-soft);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.dropzone:hover { border-color: var(--ink); background: rgba(27,27,22,0.03); }
+.dropzone-icon { color: var(--ink-soft); }
+.dropzone-text { font-size: 14px; color: var(--ink-soft); }
+
+/* ===== Resume summary screen ===== */
+.project-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+.project-card { padding: 22px 24px; }
+.project-name { font-family: 'Fraunces', serif; font-size: 18px; margin: 0 0 2px; }
+.project-role { font-size: 12.5px; color: var(--ink-soft); margin: 0 0 8px; font-style: italic; }
+.project-desc { font-size: 14px; line-height: 1.5; margin: 0 0 14px; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border: 1px solid var(--ink);
+  border-radius: 20px;
+  background: var(--cream);
+}
+.mode-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ===== Quiz question card ===== */
+.question-card { display: flex; flex-direction: column; gap: 18px; }
+.question-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ticket {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1.5px solid var(--ink);
+  border-radius: 5px;
+  padding: 3px 8px;
+}
+.tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--cream);
+  border: 1px solid var(--ink-soft);
+  color: var(--ink-soft);
+}
+.tag-advanced { border-color: var(--incorrect); color: var(--incorrect); }
+.question-text { font-family: 'Fraunces', serif; font-weight: 500; font-size: 21px; line-height: 1.35; margin: 0; }
+
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  padding: 13px 16px;
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  background: var(--cream-light);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.option:hover:not(:disabled) { background: var(--cream); }
+.option:disabled { cursor: default; }
+.option-letter {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 13px;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.option-correct { background: var(--correct-bg); border-color: var(--correct); }
+.option-correct .option-letter { background: var(--correct); border-color: var(--correct); color: var(--cream-light); }
+.option-incorrect { background: var(--incorrect-bg); border-color: var(--incorrect); }
+.option-incorrect .option-letter { background: var(--incorrect); border-color: var(--incorrect); color: var(--cream-light); }
+
+.explanation {
+  border-top: 1.5px dashed var(--ink-soft);
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.explanation p { font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+
+/* ===== Results screen ===== */
+.score-card { text-align: center; margin-bottom: 8px; }
+.score-number { font-family: 'Fraunces', serif; font-weight: 700; font-size: 52px; margin: 0; }
+.score-percent { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ink-soft); margin: 4px 0 0; }
+
+.breakdown { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.breakdown-row { display: flex; align-items: center; gap: 12px; }
+.breakdown-name { font-size: 13px; width: 130px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.breakdown-bar-track { flex: 1; height: 10px; background: var(--cream-light); border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; }
+.breakdown-bar-fill { height: 100%; background: var(--ink); }
+.breakdown-fraction { font-family: 'IBM Plex Mono', monospace; font-size: 12px; width: 32px; text-align: right; flex-shrink: 0; }
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 32px; }
+  .card { padding: 20px; }
+}

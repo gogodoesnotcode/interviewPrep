@@ -26,6 +26,11 @@ Generate exactly {num_questions} multiple-choice questions that test
 genuine understanding of these technologies as they'd be used in these
 projects — not generic trivia.
 
+Return a single JSON object that matches the schema exactly.
+Use plain text only.
+Do not include markdown, code fences, backticks, or escaped quotes.
+Keep each question and option short and clear.
+
 For each question:
 - Tie it explicitly to one project and one primary technology from that
   project.
@@ -40,5 +45,8 @@ For each question:
 - Distribute questions across as many different projects and technologies
   as the resume provides — do not generate all questions about a single
   project unless only one project exists.
+
+Use concise option strings with no extra commentary.
+Every options list must contain exactly 4 plain strings.
 
 Return exactly {num_questions} questions, no more, no fewer."""
