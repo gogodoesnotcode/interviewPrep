@@ -239,6 +239,40 @@ body {
 .breakdown-bar-fill { height: 100%; background: var(--ink); }
 .breakdown-fraction { font-family: 'IBM Plex Mono', monospace; font-size: 12px; width: 32px; text-align: right; flex-shrink: 0; }
 
+/* ===== Descriptive answers ===== */
+.answer-form { display: flex; flex-direction: column; gap: 14px; }
+.textarea {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 14px 16px;
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  background: var(--cream-light);
+  resize: vertical;
+}
+.textarea:focus { outline: 2px solid var(--ink-soft); outline-offset: 2px; }
+
+.evaluation { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.score-badge {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 30px;
+  width: 76px;
+  height: 76px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cream);
+}
+.eval-feedback { font-size: 14px; line-height: 1.55; color: var(--ink-soft); max-width: 44ch; margin: 0; }
+.point-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; width: 100%; text-align: left; }
+.point { font-size: 13px; padding: 8px 12px; border-radius: 6px; border: 1px solid; }
+.point-covered { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); }
+.point-missed { border-color: var(--incorrect); background: var(--incorrect-bg); color: var(--incorrect); }
+
 @media (max-width: 480px) {
   .hero-title { font-size: 32px; }
   .card { padding: 20px; }

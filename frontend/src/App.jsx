@@ -4,6 +4,8 @@ import ResumeUpload from "./components/ResumeUpload";
 import ResumeSummary from "./components/ResumeSummary";
 import MCQQuiz from "./components/MCQQuiz";
 import QuizSummary from "./components/QuizSummary";
+import DescriptiveQuiz from "./components/DescriptiveQuiz";
+import DescriptiveSummary from "./components/DescriptiveSummary";
 import "./styles.css";
 
 export default function App() {
@@ -11,6 +13,8 @@ export default function App() {
   const [resumeData, setResumeData] = useState(null);
   const [quizData, setQuizData] = useState(null);
   const [quizAnswers, setQuizAnswers] = useState([]);
+  const [descriptiveQuestions, setDescriptiveQuestions] = useState(null);
+  const [descriptiveEvaluations, setDescriptiveEvaluations] = useState([]);
 
   return (
     <div className="app-shell">
@@ -34,6 +38,10 @@ export default function App() {
             setQuizData(q);
             setScreen("mcq");
           }}
+          onDescriptiveStart={(questions) => {
+            setDescriptiveQuestions(questions);
+            setScreen("descriptive");
+          }}
         />
       )}
       {screen === "mcq" && (
@@ -49,6 +57,21 @@ export default function App() {
         <QuizSummary
           answers={quizAnswers}
           quizData={quizData}
+          onRetake={() => setScreen("summary")}
+        />
+      )}
+      {screen === "descriptive" && (
+        <DescriptiveQuiz
+          questions={descriptiveQuestions}
+          onComplete={(evaluations) => {
+            setDescriptiveEvaluations(evaluations);
+            setScreen("descriptive-results");
+          }}
+        />
+      )}
+      {screen === "descriptive-results" && (
+        <DescriptiveSummary
+          evaluations={descriptiveEvaluations}
           onRetake={() => setScreen("summary")}
         />
       )}

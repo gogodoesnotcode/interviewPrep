@@ -1,20 +1,33 @@
 import { useState } from "react";
-import { generateMcqQuiz } from "../api/client";
+import { generateDescriptiveQuiz, generateMcqQuiz } from "../api/client";
 
-export default function ResumeSummary({ resumeData, onMcqStart }) {
-  const [isGenerating, setIsGenerating] = useState(false);
+export default function ResumeSummary({ resumeData, onMcqStart, onDescriptiveStart }) {
+  const [generatingMode, setGeneratingMode] = useState(null);
   const [error, setError] = useState(null);
 
   async function handleMcqStart() {
     setError(null);
-    setIsGenerating(true);
+    setGeneratingMode("mcq");
     try {
       const quiz = await generateMcqQuiz(resumeData, 12);
       onMcqStart(quiz);
     } catch (err) {
       setError("Couldn't generate questions. Try again.");
     } finally {
-      setIsGenerating(false);
+      setGeneratingMode(null);
+    }
+  }
+
+  async function handleDescriptiveStart() {
+    setError(null);
+    setGeneratingMode("descriptive");
+    try {
+      const questions = await generateDescriptiveQuiz(resumeData, 8);
+      onDescriptiveStart(questions);
+    } catch (err) {
+      setError("Couldn't generate questions. Try again.");
+    } finally {
+      setGeneratingMode(null);
     }
   }
 
@@ -45,11 +58,11 @@ export default function ResumeSummary({ resumeData, onMcqStart }) {
       </div>
 
       <div className="mode-buttons">
-        <button className="btn" onClick={handleMcqStart} disabled={isGenerating}>
-          {isGenerating ? "Building your quiz…" : "Practice multiple choice"}
+        <button className="btn" onClick={handleMcqStart} disabled={generatingMode !== null}>
+          {generatingMode === "mcq" ? "Building your quiz…" : "Practice multiple choice"}
         </button>
-        <button className="btn btn-secondary" disabled title="Coming soon">
-          Practice written answers &mdash; soon
+        <button className="btn btn-secondary" onClick={handleDescriptiveStart} disabled={generatingMode !== null}>
+          {generatingMode === "descriptive" ? "Building your questions…" : "Practice written answers"}
         </button>
       </div>
 

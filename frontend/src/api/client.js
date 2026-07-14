@@ -15,3 +15,23 @@ export async function generateMcqQuiz(resume, numQuestions = 12) {
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
+
+export async function generateDescriptiveQuiz(resume, numQuestions = 8) {
+  const res = await fetch("/api/quiz/descriptive", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ resume, num_questions: numQuestions }),
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return (await res.json()).questions;
+}
+
+export async function evaluateAnswer(question, userAnswer) {
+  const res = await fetch("/api/quiz/evaluate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question, user_answer: userAnswer }),
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
