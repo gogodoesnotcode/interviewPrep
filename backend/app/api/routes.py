@@ -1,10 +1,16 @@
 from fastapi import APIRouter, UploadFile, HTTPException
 from app.core.config import settings
+from app.agent.descriptive_graph import run_descriptive_generation
+from app.agent.evaluation_graph import run_evaluation
 from app.agent.resume_graph import run_resume_parse
-from app.parsing.resume_extractor import extract_text
-from app.models.api_models import ResumeUploadResponse
 from app.agent.mcq_graph import run_mcq_generation
-from app.models.api_models import MCQGenerationRequest
+from app.parsing.resume_extractor import extract_text
+from app.models.api_models import (
+    DescriptiveGenerationRequest,
+    EvaluationRequest,
+    MCQGenerationRequest,
+    ResumeUploadResponse,
+)
 
 router = APIRouter(prefix="/api")
 
@@ -36,3 +42,16 @@ async def generate_mcq(req: MCQGenerationRequest):
     if quiz is None:
         raise HTTPException(422, "Question generation failed validation twice — try again.")
     return quiz
+
+
+@router.post("/quiz/descriptive")
+async def generate_descriptive(req: DescriptiveGenerationRequest):
+    questions = await run_descriptive_generation(req.resume, req.num_questions)
+    if questions is None:
+        raise HTTPException(422, "Question generation failed validation twice — try again.")
+    return {"questions": questions}
+
+
+@router.post("/quiz/evaluate")
+async def evaluate(req: EvaluationRequest):
+    return await run_evaluation(req.question, req.user_answer)
