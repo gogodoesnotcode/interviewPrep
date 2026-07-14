@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 /* ===== Design tokens ===== */
 :root {
-  --cream: #f2ecdc;
-  --cream-light: #faf7ee;
+  --cream: #e8dfc7;
+  --cream-light: #f3eedd;
+  --font-display: 'Source Serif 4', serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
   --ink: #1b1b16;
   --ink-soft: #6b6558;
   --border: #1b1b16;
@@ -22,7 +25,7 @@ body {
   margin: 0;
   background: var(--cream);
   color: var(--ink);
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -40,7 +43,7 @@ body {
   margin-bottom: 44px;
 }
 .brand-mark {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -49,14 +52,14 @@ body {
   padding: 3px 7px;
 }
 .brand-name {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 18px;
 }
 
 /* ===== Typography ===== */
 .eyebrow {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -64,7 +67,7 @@ body {
   margin: 0 0 10px;
 }
 .hero-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 40px;
   line-height: 1.08;
@@ -78,7 +81,7 @@ body {
   max-width: 46ch;
 }
 .section-title {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 26px;
   margin: 0 0 10px;
@@ -98,7 +101,7 @@ body {
 
 /* ===== Buttons ===== */
 .btn {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -142,12 +145,12 @@ body {
 /* ===== Resume summary screen ===== */
 .project-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
 .project-card { padding: 22px 24px; }
-.project-name { font-family: 'Fraunces', serif; font-size: 18px; margin: 0 0 2px; }
+.project-name { font-family: var(--font-display); font-size: 18px; margin: 0 0 2px; }
 .project-role { font-size: 12.5px; color: var(--ink-soft); margin: 0 0 8px; font-style: italic; }
 .project-desc { font-size: 14px; line-height: 1.5; margin: 0 0 14px; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
   padding: 4px 9px;
@@ -161,7 +164,7 @@ body {
 .question-card { display: flex; flex-direction: column; gap: 18px; }
 .question-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .ticket {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
   border: 1.5px solid var(--ink);
@@ -169,7 +172,7 @@ body {
   padding: 3px 8px;
 }
 .tag {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -181,7 +184,7 @@ body {
   color: var(--ink-soft);
 }
 .tag-advanced { border-color: var(--incorrect); color: var(--incorrect); }
-.question-text { font-family: 'Fraunces', serif; font-weight: 500; font-size: 21px; line-height: 1.35; margin: 0; }
+.question-text { font-family: var(--font-display); font-weight: 500; font-size: 21px; line-height: 1.35; margin: 0; }
 
 .options { display: flex; flex-direction: column; gap: 10px; }
 .option {
@@ -193,7 +196,7 @@ body {
   border: 1.5px solid var(--ink);
   border-radius: 8px;
   background: var(--cream-light);
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: var(--font-body);
   font-size: 14.5px;
   cursor: pointer;
   transition: background 0.12s ease;
@@ -201,7 +204,7 @@ body {
 .option:hover:not(:disabled) { background: var(--cream); }
 .option:disabled { cursor: default; }
 .option-letter {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono);
   font-weight: 600;
   font-size: 13px;
   width: 26px;
@@ -229,20 +232,20 @@ body {
 
 /* ===== Results screen ===== */
 .score-card { text-align: center; margin-bottom: 8px; }
-.score-number { font-family: 'Fraunces', serif; font-weight: 700; font-size: 52px; margin: 0; }
-.score-percent { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ink-soft); margin: 4px 0 0; }
+.score-number { font-family: var(--font-display); font-weight: 700; font-size: 52px; margin: 0; }
+.score-percent { font-family: var(--font-mono); font-size: 13px; color: var(--ink-soft); margin: 4px 0 0; }
 
 .breakdown { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
 .breakdown-row { display: flex; align-items: center; gap: 12px; }
 .breakdown-name { font-size: 13px; width: 130px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .breakdown-bar-track { flex: 1; height: 10px; background: var(--cream-light); border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; }
 .breakdown-bar-fill { height: 100%; background: var(--ink); }
-.breakdown-fraction { font-family: 'IBM Plex Mono', monospace; font-size: 12px; width: 32px; text-align: right; flex-shrink: 0; }
+.breakdown-fraction { font-family: var(--font-mono); font-size: 12px; width: 32px; text-align: right; flex-shrink: 0; }
 
 /* ===== Descriptive answers ===== */
 .answer-form { display: flex; flex-direction: column; gap: 14px; }
 .textarea {
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
   padding: 14px 16px;
@@ -255,7 +258,7 @@ body {
 
 .evaluation { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
 .score-badge {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 30px;
   width: 76px;
