@@ -14,6 +14,8 @@ class ResumeExtraction(BaseModel):
     candidate_name: str | None = None
     projects: list[ProjectTech]
     all_technologies: list[str] = Field(description="Deduplicated flat list across all projects")
+
+
 class MCQQuestion(BaseModel):
     id: str
     project_name: str
@@ -26,3 +28,24 @@ class MCQQuestion(BaseModel):
 
 class MCQQuizSet(BaseModel):
     questions: list[MCQQuestion]
+
+
+class DescriptiveQuestion(BaseModel):
+    id: str
+    project_name: str
+    technology: str
+    question: str
+    model_answer: str = Field(description="Reference answer — sent to the client but not rendered pre-grading")
+    key_points: list[str] = Field(description="3-5 ideas a strong answer should cover")
+
+
+class DescriptiveQuestionSet(BaseModel):
+    questions: list[DescriptiveQuestion]
+
+
+class AnswerEvaluation(BaseModel):
+    question_id: str
+    score: int = Field(ge=0, le=100)
+    covered_points: list[str]
+    missed_points: list[str]
+    feedback: str
